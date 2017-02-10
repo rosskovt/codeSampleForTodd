@@ -43,7 +43,7 @@ func index(w http.ResponseWriter, req *http.Request) {
 			// state change to display error
 			Data.State = true
 			// redirect on error
-			http.Redirect(w, req, "/", http.StatusMovedPermanently)
+			http.Redirect(w, req, "/", http.StatusSeeOther)
 			return
 		}
 		defer mf.Close()
