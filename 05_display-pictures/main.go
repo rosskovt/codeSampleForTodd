@@ -18,6 +18,7 @@ func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 }
 
+// added struct to pass more data to the template
 var Data struct{
 	State bool
 	Pics []string
@@ -34,11 +35,14 @@ func main() {
 func index(w http.ResponseWriter, req *http.Request) {
 	c := getCookie(w, req)
 	if req.Method == http.MethodPost {
+		// error state reset
 		Data.State = false
 		mf, fh, err := req.FormFile("nf")
 		if err != nil {
 			fmt.Println(err)
+			// state change to display error
 			Data.State = true
+			// redirect on error
 			http.Redirect(w, req, "/", http.StatusMovedPermanently)
 			return
 		}
@@ -67,7 +71,7 @@ func index(w http.ResponseWriter, req *http.Request) {
 	}
 	xs := strings.Split(c.Value, "|")
 	Data.Pics = xs[1:]
-	// sliced cookie values to only send over images
+	// passing struct
 	tpl.ExecuteTemplate(w, "index.gohtml", Data)
 }
 
