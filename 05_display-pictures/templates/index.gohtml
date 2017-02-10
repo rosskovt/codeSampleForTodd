@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>INDEX</title>
-</head><body>
+</head>
+<body>
+
+<!-- if State is true - displaying empty file error -->
+
 {{if .State}}
 <p>no such file or empty selection</p>
 {{end}}
 
 <h1>Your Pictures:</h1>
+
+<!-- ranging over Data.Pics -->
 {{range .Pics}}
 <img src="/public/pics/{{.}}" width="400px">
 {{end}}
